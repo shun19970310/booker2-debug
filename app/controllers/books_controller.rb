@@ -1,9 +1,12 @@
 class BooksController < ApplicationController
-
   def show
     @books = Book.find(params[:id])
     @book = Book.new
     @user = @books.user
+    #投稿詳細に関連付けてあるコメントを全取得
+    @comments = @book.comments
+    #投稿詳細画面でコメントの投稿を行うので、formのパラメータ用にCommentオブジェクトを取得
+    @comment = current_user.comment.new
   end
 
   def index
@@ -17,7 +20,7 @@ class BooksController < ApplicationController
     if @book.save
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
-      @books = Book.all
+	    @books = Book.all
       render 'index'
     end
   end

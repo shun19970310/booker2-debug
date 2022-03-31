@@ -5,9 +5,15 @@ Rails.application.routes.draw do
   get "home/about"=>"homes#about"
 
   resources :books, only: [:index,:show,:edit,:create,:destroy,:update]
+
   resources :books do
     resource :favorites, only: [:create, :destroy]
   end
+
+  resources :books do  #postsコントローラへのルーティング
+    resources :comments, only: [:create, :destroy]  #commentsコントローラへのルーティング
+  end
+
   resources :users, only: [:index,:show,:edit,:update]
 
 
