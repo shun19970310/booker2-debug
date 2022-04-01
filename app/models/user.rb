@@ -8,7 +8,8 @@ class User < ApplicationRecord
   # ユーザーにもbookモデルに記入したfavoriteモデルとのアソシエーションをかく
   has_many :favorites, dependent: :destroy
   # ユーザーはいくつかのコメントができる
-  has_many :comments, dependent: :destroy
+  has_many :book_comments, dependent: :destroy
+
   has_one_attached :profile_image
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true

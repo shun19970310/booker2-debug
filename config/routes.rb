@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
   end
 
-  resources :books do  #postsコントローラへのルーティング
+  resources :books do  #booksコントローラへのルーティング
     resources :comments, only: [:create, :destroy]  #commentsコントローラへのルーティング
   end
 

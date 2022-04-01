@@ -1,29 +1,22 @@
 class BookCommentsController < ApplicationController
-  before_action :correct_user, only: [:destroy]
   def create
-    @comment = current_user.comments.new(comment_params)
-    if @comment.save
-      redirect_back(fallback_location: root_path)  #コメント送信後は、一つ前のページへリダイレクトさせる。
-    else
-      redirect_back(fallback_location: root_path)  #同上
-    end
+    book = Book.find(params[:book_id])
+    comment = current_user.book_comments.new(book_comment_params)
+    comment.book_id = book.id
+    comment.save
+    # コメント後は行う前の画面に遷移すること
+    redirect_to request.referer
   end
 
   def destroy
-    @comment = current_user.comments.find_by(id: params[:id])
-    @comment.destroy
-    flash[:success] = '投稿へのコメントを削除しました。'
-    redirect_back(fallback_location: root_path)
-  end
-  private
-  def comment_params
-    params.require(:book_comment).permit(:comment, :book_id)  #formにてpost_idパラメータを送信して、コメントへpost_idを格納するようにする必要がある。
+    BookComment.find_by(id: params[:id], book_id: params[:book_id]).destroy
+    # コメント削除後は行う前の画面に遷移すること
+    redirect_to request.referer
   end
 
-  def correct_user
-    @comment = current_user.comments.find_by(id: params[:id])
-    unless @comment
-      redirect_to root_path
-    end
+  private
+
+  def book_comment_params
+    params.require(:book_comment).permit(:comment)
   end
 end
