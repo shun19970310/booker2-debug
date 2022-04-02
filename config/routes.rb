@@ -11,13 +11,13 @@ Rails.application.routes.draw do
   end
 
   resources :books do  #booksコントローラへのルーティング
-    resources :comments, only: [:create, :destroy]  #commentsコントローラへのルーティング
+    resources :book_comments, only: [:create, :destroy]  #book_commentsコントローラへのルーティング
   end
 
   resources :users, only: [:index,:show,:edit,:update]
 
   resources :users do
-    resource :relationships, only: [:cretae, :destroy]
+    resource :relationships, only: [:create, :destroy]
   get 'followings' => 'relationships#followings', as: 'followings'
   get 'followers' => 'relationships#followers', as: 'followers'
   end
