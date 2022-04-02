@@ -5,10 +5,7 @@ class BooksController < ApplicationController
 #   例えば正しいユーザーか確かめる処理を追加し、before_actionでチェックします。
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
   def show
-    @books = Book.find(params[:id])
-    @book = Book.new
-    @user = @books.user
-    # 用途：コメントを作成する
+    @book = Book.find(params[:id])
     @book_comment = BookComment.new
   end
 
@@ -23,23 +20,15 @@ class BooksController < ApplicationController
     if @book.save
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
-	    @books = Book.all
+      @books = Book.all
       render 'index'
     end
   end
 
   def edit
-    @book = Book.find(params[:id])
-    if @book.user == current_user
-      render "edit"
-    else
-      redirect_to books_path
-    end
   end
 
   def update
-    @book = Book.find(params[:id])
-    # @book = Book.new
     if @book.update(book_params)
       redirect_to book_path(@book), notice: "You have updated book successfully."
     else
@@ -48,7 +37,6 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    @book = Book.find(params[:id])
     @book.destroy
     redirect_to books_path
   end
@@ -58,6 +46,7 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body)
   end
+
   def ensure_correct_user
     @book = Book.find(params[:id])
     unless @book.user == current_user

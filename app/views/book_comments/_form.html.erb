@@ -1,4 +1,6 @@
-<%= form_with(model:[book, book_comment], local: true) do |f| %>
+<!--rails routesで /books/:book_id/となっており、通常は/books/:idのようになっているが、この場合はpathの後ろにurlを指定する必要がある。-->
+<!--(book_id: book.id):model:[book, book_comment]のbookに紐づくidをurl内のbook_idに代入している-->
+<%= form_with(model:[book, book_comment],url: book_comments_path(book_id: book.id), local: true) do |f| %>
   <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに", class: "w-100" %>
   <%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
 <% end %>

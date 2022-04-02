@@ -1,5 +1,7 @@
+<!--users/showからの部分テンプレート-->
 <table>
   <tbody>
+      <!--book_commentsはbook.rbのhas_many :book_commentsのアソシエーションで、それらに紐づくたくさんのコメントを引っ張ってきている。-->
       <% book.book_comments.each do |book_comment| %>
       <tr>
 

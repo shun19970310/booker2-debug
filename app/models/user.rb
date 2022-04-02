@@ -14,12 +14,30 @@ class User < ApplicationRecord
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: {maximum: 50}
-
+  # フォローした、されたの関係
+  has_many :relationships, class_name: 'Relationship', foreign_key: :follower_id, dependent: :destroy
+  has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: :followed_id, dependent: :destroy
+  # 一覧画面で使う
+  has_many :followings, through: :relationships, source: :followed
+  has_many :followers, through: :reverse_of_relationships, source: :follower
   # いいねをしたかしていないかを判定するメソッド
   # selfにはcurrent_userが入っているイメージ
   # つまりcurrent_userに結びついているいいね（favorite）の中でbook_idが今いいねしようとしているbook.id（bookのid）が存在するか？
   def already_favorited?(book)
     self.favorites.exists?(book_id: book.id)
+  end
+  # ↓下でメソッドを記述することでrelationships_controllerがスッキリする
+  # フォローしたときの処理
+  def follow(user_id)
+   relationships.create(followed_id: user_id)
+  end
+  # フォローを外すときの処理
+  def unfollow(user_id)
+   relationships.find_by(followed_id: user_id).destroy
+  end
+  # フォローしているか判定
+  def following?(user)
+   followings.include?(user)
   end
 
   def get_profile_image
