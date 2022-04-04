@@ -1,4 +1,5 @@
 <h2>Follower Users</h2>
+<!--relationships_contorollerのfollwersアクションで定義した@users-->
 <% if @users.exists? %>
   <%= render '/users/index', users: @users %>
 <% else %>
