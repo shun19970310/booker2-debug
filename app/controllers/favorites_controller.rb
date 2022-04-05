@@ -10,6 +10,7 @@ class FavoritesController < ApplicationController
   # いいね機能を非同期通信化したいので、リダイレクト先がない、かつJavaScriptリクエストという状況に変化させた
    # redirect_back(fallback_location: root_path)
   end
+
   def destroy
    @book = Book.find(params[:book_id])
   # current_userに結びつているいいね(favorite)の中から上で定義した@bookのidをbook_idに入れたものを@favoriteに格納している
