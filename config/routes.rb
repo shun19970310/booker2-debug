@@ -24,5 +24,5 @@ Rails.application.routes.draw do
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   # 検索ボタンが押された時、Searchesコントローラーのsearchアクションが実行されるように定義
-  get "search" => "searches#search"
+  get "/search" => "searches#search"
 end
