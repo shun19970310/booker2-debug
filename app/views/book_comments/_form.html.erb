@@ -2,7 +2,7 @@
 <!--(book_id: book.id):model:[book, book_comment]のbookに紐づくidをurl内のbook_idに代入している-->
 <!--コメント送信後に前のページに遷移しなかった←routes.rbで誤ったルーティングを記述していたので、正しいルーティングを設定-->
 <!--その結果、book_comments#createのパスがbook_book_commentsに変わったので修正-->
-<%= form_with(model:[book, book_comment],url: book_book_comments_path(book_id: book.id), local: true) do |f| %>
+<%= form_with(model:[book, book_comment],url: book_book_comments_path(book_id: book.id)) do |f| %>
   <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに", class: "w-100" %>
   <%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
 <% end %>

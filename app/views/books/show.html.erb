@@ -28,10 +28,16 @@
           <% end %>
         </tr>
        </table>
-
-      <%= render "book_comments/index", book: @book %>
-      <%= render "book_comments/form", book: @book, book_comment: @book_comment %>
-
+      <!--部分テンプレート化-->
+      <!--コメントフォーム-->
+      <div class="new-comment">
+       <%= render "book_comments/index", book: @book %>
+      </div>
+      <!--コメント一覧部分-->
+      <!--divタグのclassをid="comments_area"に変更-->
+      <div id="comments_area">
+       <%= render "book_comments/form", book: @book, book_comment: @book_comment %>
+      </div>
     </div>
   </div>
 </div>
