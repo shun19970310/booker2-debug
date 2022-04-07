@@ -17,27 +17,30 @@
           </td>
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
-          <td>コメント数: <%= @book.book_comments.count %></td>
+          <!--class名をつけることで対応するjsファイル（create.jsとdestroy.js）にて更新できる-->
+          <td class="book-comments-counter">
+            コメント数: <%= @book.book_comments.count %>
+          </td>
           <!--この箇所の更新を指定するために、変更したい箇所にidで名前をつけます。-->
           <td id="favorite_buttons_<%= @book.id %>">
             <%= render "favorites/btn", book: @book %>
           </td>
           <% if @book.user == current_user %>
+            <!--class名の#{@book.id}は無視してOK（よく分からないコードになっているので）-->
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
+            <!--@bookはパスにモデル名を指定することで自動的にurlを探すもの、@book = Book.find(params[:id])、正式な書き方ではbook_path(@book)となる-->
             <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
           <% end %>
         </tr>
        </table>
       <!--部分テンプレート化-->
-      <!--コメントフォーム-->
-      <div class="new-comment">
+      <!--コメント一覧部分-->
+      <!--class名をつけることで対応するjsファイル（create.jsとdestroy.js）にて更新できる-->
+      <div class="book-comments-index">
        <%= render "book_comments/index", book: @book %>
       </div>
-      <!--コメント一覧部分-->
-      <!--divタグのclassをid="comments_area"に変更-->
-      <div id="comments_area">
-       <%= render "book_comments/form", book: @book, book_comment: @book_comment %>
-      </div>
+      <!--コメントフォーム-->
+      <%= render "book_comments/form", book: @book, book_comment: @book_comment %>
     </div>
   </div>
 </div>

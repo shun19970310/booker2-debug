@@ -1,0 +1,7 @@
+<!--フォームを送信したあとにフォームの値を空にします-->
+<!--.comment-textareaはbook_comments/form内の追記したclass: "w-100 comment-textarea"を指す-->
+$('.comment-textarea').val("")
+<!--books/showでclass名を付けたコメント数とコメント一覧をrenderで指定した部分テンプレートに更新-->
+<!--@commentはbook_comments_controllerで定義した変数で、それに紐づく投稿（book）はbooks_comments.rbのbelongs_to :bookから持ってきている-->
+$('.book-comments-counter').html("<%= j(render 'book_comments/counter', book: @comment.book) %>")
+$('.book-comments-index').html("<%= j(render 'book_comments/index', book: @comment.book) %>")

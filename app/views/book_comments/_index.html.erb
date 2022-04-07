@@ -4,7 +4,6 @@
       <!--book_commentsはbook.rbのhas_many :book_commentsのアソシエーションで、それらに紐づくたくさんのコメントを引っ張ってきている。-->
       <% book.book_comments.each do |book_comment| %>
       <tr>
-
         <td>
           <%= link_to user_path(book_comment.user) do %>
             <%= image_tag book_comment.user.get_profile_image, size: "100x100" %><br>
@@ -14,6 +13,7 @@
         <td><%= book_comment.comment %></td>
         <td>
           <% if book_comment.user == current_user %>
+            <!--ルーティングを見るとbook_comments#destroyのurlは/:book_id/book_comments/:id(.:format)となっているため、2つのidを指定する必要がある-->
             <%= link_to "Destroy", book_book_comment_path(book, book_comment), method: :delete, remote: true, class: "btn btn-danger pull-right" %>
           <% end %>
         </td>
